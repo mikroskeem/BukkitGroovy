@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>eu.mikroskeem.debug</groupId>
+    <artifactId>bukkitgroovy</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <minecraft.version>1.11.2-R0.1-SNAPSHOT</minecraft.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>destroystokyo-repo</id>
+            <url>https://repo.destroystokyo.com/repository/maven-public//</url>
+        </repository>
+        <repository>
+            <id>bstats-repo</id>
+            <url>https://repo.bstats.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>mikroskeem-repo</id>
+            <name>mikroskeem Maven Repository</name>
+            <url>https://repo.wut.ee/repository/mikroskeem-repo/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/LICENSE</exclude>
+                                        <exclude>META-INF/DEPENDENCIES</exclude>
+                                        <exclude>META-INF/NOTICE</exclude>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/maven/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.bstats</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.bstats</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>eu.mikroskeem.utils.reflect</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.reflect</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>eu.mikroskeem.utils.bukkit</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.bukkitutils</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <defaultGoal>clean compile test package</defaultGoal>
+    </build>
+    <dependencies>
+        <!-- Platform -->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>${minecraft.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ProvidersLib API -->
+        <dependency>
+            <groupId>eu.mikroskeem.providerslib</groupId>
+            <artifactId>api</artifactId>
+            <version>0.0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Stats -->
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
+        <!-- Reflection library -->
+        <dependency>
+            <groupId>eu.mikroskeem</groupId>
+            <artifactId>reflect</artifactId>
+            <version>1.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.mikroskeem</groupId>
+            <artifactId>bukkitutils</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Groovy shell -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-jsr223</artifactId>
+            <version>2.4.7</version>
+        </dependency>
+
+        <!-- Misc -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
