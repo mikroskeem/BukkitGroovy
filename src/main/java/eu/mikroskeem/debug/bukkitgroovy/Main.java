@@ -28,6 +28,7 @@ public class Main extends JavaPlugin {
             getLogger().warning("Failed to get PluginClassLoader, using fallback");
             pluginClassLoader = this.getClassLoader();
         }
+        bindingProvider = FallbackBinding.getInstance();
         try {
             if(Reflect.classExists("eu.mikroskeem.providerslib.api.Providers")){
                 bindingProvider = ProvidersLibBinding.Initializer.getInstance(this);
@@ -39,7 +40,6 @@ public class Main extends JavaPlugin {
             getLogger().info("Failed to hook into ProvidersLib! Stacktrace is printed below");
             e.getMessage();
         }
-        bindingProvider = FallbackBinding.getInstance();
         getCommand("groovyscript").setExecutor(new GroovyScriptCommand(
                 this,
                 executorService,

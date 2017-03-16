@@ -34,7 +34,7 @@ public class ProvidersLibBinding implements BindingProvider {
     public static class Initializer {
         private static ProvidersLibBinding cachedInstance = null;
         public static ProvidersLibBinding getInstance(Main main){
-            if(cachedInstance != null){
+            if(cachedInstance == null){
                 RegisteredServiceProvider<eu.mikroskeem.providerslib.api.Providers> providers =
                         main.getServer().getServicesManager()
                                 .getRegistration(eu.mikroskeem.providerslib.api.Providers.class);

@@ -6,7 +6,7 @@
 
     <groupId>eu.mikroskeem.debug</groupId>
     <artifactId>bukkitgroovy</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <properties>
         <minecraft.version>1.11.2-R0.1-SNAPSHOT</minecraft.version>
