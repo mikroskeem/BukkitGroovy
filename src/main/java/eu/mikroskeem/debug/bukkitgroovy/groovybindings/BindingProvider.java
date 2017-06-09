@@ -1,7 +1,7 @@
 package eu.mikroskeem.debug.bukkitgroovy.groovybindings;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public interface BindingProvider {
-    HashMap<String, Object> getBindings();
+    Map<String, Object> getBindings();
 }

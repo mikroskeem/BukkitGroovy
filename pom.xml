@@ -6,10 +6,10 @@
 
     <groupId>eu.mikroskeem.debug</groupId>
     <artifactId>bukkitgroovy</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <properties>
-        <minecraft.version>1.11.2-R0.1-SNAPSHOT</minecraft.version>
+        <minecraft.version>1.12-R0.1-SNAPSHOT</minecraft.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -76,12 +76,30 @@
                                     <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.bstats</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>eu.mikroskeem.utils.reflect</pattern>
-                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.reflect</shadedPattern>
+                                    <pattern>eu.mikroskeem.shuriken</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.shuriken</shadedPattern>
+                                </relocation>
+
+                                <!-- PicoMaven stuff -->
+                                <relocation>
+                                    <pattern>eu.mikroskeem.picomaven</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.picomaven</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>eu.mikroskeem.utils.bukkit</pattern>
-                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.bukkitutils</shadedPattern>
+                                    <pattern>org.apache.maven</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.picomaven.maven</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.codehaus.plexus</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.picomaven.plexus</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>okhttp3</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.picomaven.okhttp3</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>okio</pattern>
+                                    <shadedPattern>eu.mikroskeem.debug.bukkitgroovy.picomaven.okio</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -100,8 +118,8 @@
     <dependencies>
         <!-- Platform -->
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
+            <groupId>com.destroystokyo.paper</groupId>
+            <artifactId>paper-api</artifactId>
             <version>${minecraft.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -124,27 +142,30 @@
         <!-- Reflection library -->
         <dependency>
             <groupId>eu.mikroskeem</groupId>
-            <artifactId>reflect</artifactId>
-            <version>1.2-SNAPSHOT</version>
+            <artifactId>shuriken.common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <!-- PicoMaven -->
         <dependency>
             <groupId>eu.mikroskeem</groupId>
-            <artifactId>bukkitutils</artifactId>
-            <version>1.7-SNAPSHOT</version>
+            <artifactId>picomaven</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
 
         <!-- Groovy shell -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-jsr223</artifactId>
-            <version>2.4.7</version>
+            <version>2.4.11</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Misc -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.10</version>
+            <version>1.16.16</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -8,7 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 public class GroovyScriptCommand implements CommandExecutor {
@@ -17,7 +17,7 @@ public class GroovyScriptCommand implements CommandExecutor {
     private final Binding binding;
     private final GroovyShell groovyShell;
 
-    public GroovyScriptCommand(Main plugin, ExecutorService ex, ClassLoader classLoader, HashMap<String,Object> exp){
+    public GroovyScriptCommand(Main plugin, ExecutorService ex, ClassLoader classLoader, Map<String,Object> exp) {
         this.plugin = plugin;
         this.ex = ex;
         this.binding = new Binding(exp);
@@ -27,15 +27,15 @@ public class GroovyScriptCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String line = String.join(" ", args);
-        if(command.getName().equals("groovyscript") && line.length() > 0){
+        if(command.getName().equals("groovyscript") && line.length() > 0) {
             if(sender instanceof Player) {
-                binding.setProperty("player", (Player) sender);
-            } else if(sender instanceof CommandBlock){
-                binding.setProperty("block", (CommandBlock) sender);
+                binding.setProperty("player", sender);
+            } else if(sender instanceof CommandBlock) {
+                binding.setProperty("block", sender);
             } else {
                 binding.setProperty("sender", sender);
             }
-            plugin.getServer().getScheduler().runTask(plugin, ()->{
+            plugin.getServer().getScheduler().runTask(plugin, ()-> {
                 try {
                     final Object res = groovyShell.evaluate(line);
                     if(res != null) {
