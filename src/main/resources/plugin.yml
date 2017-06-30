@@ -11,7 +11,7 @@ commands:
   groovyscript:
     description: §8§l[§a§lBG§8§l]§7 Evaluate Groovy script
     permission: bukkitgroovy.use
-    usage: §8/§a<command> §8[§acode§8]
+    usage: §8/§a<command> §8[§acode§8/§aurl§8]
     aliases:
     - groovy
     - gr
