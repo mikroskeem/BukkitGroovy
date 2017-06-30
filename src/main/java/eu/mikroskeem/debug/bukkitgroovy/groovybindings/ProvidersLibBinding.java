@@ -24,10 +24,9 @@ public class ProvidersLibBinding implements BindingProvider {
     public HashMap<String, Object> getBindings() {
         if(cachedBindings == null) {
             cachedBindings = new HashMap<String, Object>() {{
-                Reflect.wrapInstance(this).getFields().forEach(field -> {
+                Reflect.wrapInstance(ProvidersLibBinding.this).getFields().forEach(field -> {
                     if(field.getAnnotation(Inject.class).isPresent()) {
                         put(field.getName(), field.read());
-
                     }
                 });
             }};
