@@ -32,7 +32,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         /* Load Groovy dependency */
         if(!Reflect.getClass("org.codehaus.groovy.jsr223.GroovyScriptEngineFactory").isPresent()) {
-            getLogger().info("Downloading Groovy library");
+            getLogger().info("Setting up Groovy library...");
             List<Dependency> dependencyList = Arrays.asList(
                 new Dependency("org.codehaus.groovy", "groovy-all", "2.4.11"),
                 new Dependency("org.codehaus.groovy", "groovy-jsr223", "2.4.11")
@@ -107,7 +107,7 @@ public class Main extends JavaPlugin {
                 List<Runnable> killed = executorService.shutdownNow();
                 if(killed.size() > 0) {
                     getLogger().info(String.format("Killed forcefully %s threads, thread list:", killed.size()));
-                    killed.forEach(thread -> getLogger().info(thread.toString()));
+                    killed.stream().map(Object::toString).forEach(getLogger()::info);
                 }
             }
         } catch (InterruptedException e) {
