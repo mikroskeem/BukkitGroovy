@@ -3,12 +3,15 @@ package eu.mikroskeem.debug.bukkitgroovy;
 import eu.mikroskeem.debug.bukkitgroovy.groovybindings.BindingProvider;
 import eu.mikroskeem.debug.bukkitgroovy.groovybindings.FallbackBinding;
 import eu.mikroskeem.debug.bukkitgroovy.groovybindings.ProvidersLibBinding;
-import eu.mikroskeem.picomaven.*;
+import eu.mikroskeem.picomaven.Constants;
+import eu.mikroskeem.picomaven.Dependency;
+import eu.mikroskeem.picomaven.DownloaderCallbacks;
+import eu.mikroskeem.picomaven.PicoMaven;
 import eu.mikroskeem.shuriken.common.ToURL;
 import eu.mikroskeem.shuriken.reflect.Reflect;
 import eu.mikroskeem.shuriken.reflect.wrappers.TypeWrapper;
 import lombok.SneakyThrows;
-import org.bstats.Metrics;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -34,8 +37,8 @@ public class Main extends JavaPlugin {
         if(!Reflect.getClass("org.codehaus.groovy.jsr223.GroovyScriptEngineFactory").isPresent()) {
             getLogger().info("Setting up Groovy library...");
             List<Dependency> dependencyList = Arrays.asList(
-                new Dependency("org.codehaus.groovy", "groovy-all", "2.4.11"),
-                new Dependency("org.codehaus.groovy", "groovy-jsr223", "2.4.11")
+                new Dependency("org.codehaus.groovy", "groovy-all", "2.4.14"),
+                new Dependency("org.codehaus.groovy", "groovy-jsr223", "2.4.14")
             );
             Path downloadPath = Paths.get(this.getDataFolder().getAbsolutePath(), "lib");
             Files.createDirectories(downloadPath);

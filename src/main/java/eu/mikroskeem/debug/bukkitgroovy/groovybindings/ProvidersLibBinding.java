@@ -2,7 +2,13 @@ package eu.mikroskeem.debug.bukkitgroovy.groovybindings;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import eu.mikroskeem.providerslib.api.*;
+import eu.mikroskeem.providerslib.api.Actionbar;
+import eu.mikroskeem.providerslib.api.Chat;
+import eu.mikroskeem.providerslib.api.Permissions;
+import eu.mikroskeem.providerslib.api.Providers;
+import eu.mikroskeem.providerslib.api.Spawnpoint;
+import eu.mikroskeem.providerslib.api.Title;
+import eu.mikroskeem.providerslib.api.Vanish;
 import eu.mikroskeem.shuriken.reflect.Reflect;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
