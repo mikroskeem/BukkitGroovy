@@ -1,3 +1,28 @@
+/*
+ * This file is part of project BukkitGroovy, licensed under the MIT License (MIT).
+ *
+ * Copyright (c) 2017-2018 Mark Vainomaa <mikroskeem@mikroskeem.eu>
+ * Copyright (c) Contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package eu.mikroskeem.debug.bukkitgroovy;
 
 import eu.mikroskeem.debug.bukkitgroovy.groovybindings.BindingProvider;
@@ -10,7 +35,6 @@ import eu.mikroskeem.picomaven.PicoMaven;
 import eu.mikroskeem.shuriken.common.ToURL;
 import eu.mikroskeem.shuriken.reflect.Reflect;
 import eu.mikroskeem.shuriken.reflect.wrappers.TypeWrapper;
-import lombok.SneakyThrows;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +55,6 @@ public class Main extends JavaPlugin {
     private BindingProvider bindingProvider = FallbackBinding.getInstance();
 
     @Override
-    @SneakyThrows
     public void onEnable() {
         /* Load Groovy dependency */
         if(!Reflect.getClass("org.codehaus.groovy.jsr223.GroovyScriptEngineFactory").isPresent()) {
@@ -41,7 +64,11 @@ public class Main extends JavaPlugin {
                 new Dependency("org.codehaus.groovy", "groovy-jsr223", "2.4.14")
             );
             Path downloadPath = Paths.get(this.getDataFolder().getAbsolutePath(), "lib");
-            Files.createDirectories(downloadPath);
+            try {
+                Files.createDirectories(downloadPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             PicoMaven.Builder picoMavenBuilder = new PicoMaven.Builder()
             .withDependencies(dependencyList)
             .withRepositories(Collections.singletonList(Constants.MAVEN_CENTRAL_REPOSITORY))
