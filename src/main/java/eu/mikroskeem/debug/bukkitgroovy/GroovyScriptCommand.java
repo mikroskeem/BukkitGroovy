@@ -27,6 +27,7 @@ package eu.mikroskeem.debug.bukkitgroovy;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import groovy.lang.Script;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -38,6 +39,9 @@ import org.bukkit.entity.Player;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.FileVisitOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
@@ -115,6 +119,23 @@ public class GroovyScriptCommand implements CommandExecutor {
         }
 
         try {
+            Path scriptsFolder = plugin.getDataFolder().toPath().resolve("scripts");
+            if(Files.exists(scriptsFolder) && Files.isDirectory(scriptsFolder)) {
+                Files.walk(scriptsFolder, 15, FileVisitOption.FOLLOW_LINKS).filter(f -> f.toString().endsWith(".groovy")).forEach(f -> {
+                    try {
+                        Script script = groovyShell.parse(f.toFile());
+                        binding.setProperty(getFileNameWithoutDot(f), script);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            sender.sendMessage(String.format("§7Failed to preload scripts: §r %s", e.getMessage()));
+            e.printStackTrace();
+        }
+
+        try {
             Object res = groovyShell.evaluate(code);
             if(res != null) {
                 sender.sendMessage(res.toString());
@@ -125,5 +146,11 @@ public class GroovyScriptCommand implements CommandExecutor {
             sender.sendMessage(String.format("§7Failed to execute:§r %s", e.getMessage()));
             e.printStackTrace();
         }
+    }
+
+    private String getFileNameWithoutDot(Path filePath) {
+        String name = filePath.getFileName().toString();
+        int dot = name.lastIndexOf('.');
+        return (dot == -1) ? name : name.substring(0, dot);
     }
 }
